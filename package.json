@@ -1,0 +1,27 @@
+{
+  "name": "krds_todo",
+  "version": "1.0.0",
+  "description": "Simple todo items for mean stack developer interview",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ./",
+    "test": "jest -i --verbose --coverage --runInBand",
+    "start": "nodemon --exec babel-node --presets env,stage-2 index.js",
+    "watch": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "Sivanthi",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.0",
+    "nodemon": "^1.18.9"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  }
+}
