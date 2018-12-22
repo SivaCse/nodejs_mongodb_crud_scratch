@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./",
-    "test": "jest -i --verbose --coverage --runInBand",
     "start": "nodemon --exec babel-node --presets env,stage-2 index.js",
     "watch": "nodemon index.js"
   },
@@ -14,8 +13,11 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
+    "create-react-app": "^2.1.1",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "mongoose": "^5.4.0",

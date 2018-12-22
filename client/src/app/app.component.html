@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+      <div class="col-md-6">
+          <div class="todolist not-done">
+           <h1>Todos</h1>
+              <input type="text"  [(ngModel)]="todo"  class="form-control add-todo" (keydown)="onKeydown($event)" placeholder="Add todo">
+                  
+                  <hr>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Todo Description</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let todo of todos | async;let i = index">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{todo.title}}</td>
+                        <td><button class="btn btn-info" (click)="updateTodo(todo)">Edit</button></td>
+                        <td><button class="btn btn-danger" (click)="deleteTodo(todo)">Delete</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+          </div>
+      </div>
+  </div>
+</div>
+
