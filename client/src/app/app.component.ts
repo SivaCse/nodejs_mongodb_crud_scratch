@@ -8,13 +8,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   todos: any = [];
+  totalPages: any;
   selectedTodoId: any = null;
   todo: any;
   message: any;
+  sortOrder: any = 'asc';
+  currentPage = 1;
   constructor(private appService: AppService) { }
 
   ngOnInit() {
-    this.todos = this.appService.getTodos();
+    this.fetchTodos();
+  }
+
+  fetchTodos() {
+    this.toggleMessage('Fetching Todos...');
+    this.todos = this.appService.getTodos(this.sortOrder, this.currentPage);
+    this.appService.getTotal()
+    .subscribe((data: any) => {
+      this.totalPages = new Array(data.pages);
+    });
   }
 
   onKeydown(event) {
@@ -22,11 +34,12 @@ export class AppComponent implements OnInit {
       const formData = { title: event.target.value, _id: this.selectedTodoId };
       if (this.selectedTodoId) {
         this.appService.updateTodo(formData)
-          .subscribe(this.resetTodoInput);
+          .subscribe(() => this.resetTodoInput('Todo Updated Successfully'));
         return;
       }
+      this.toggleMessage('Saving Todo...');
       this.appService.createTodo(formData)
-        .subscribe(this.resetTodoInput);
+        .subscribe(() => this.resetTodoInput('Todo Added Successfully'));
     }
   }
 
@@ -36,19 +49,38 @@ export class AppComponent implements OnInit {
   }
 
   deleteTodo({ _id }) {
+    this.toggleMessage('Deleting Todo...');
     this.appService.deleteTodo(_id)
-      .subscribe(this.resetTodoInput);
+      .subscribe(() => this.resetTodoInput('Todo Deleted Successfully'));
   }
 
   toggleMessage(message) {
+    this.message = message;
     setTimeout(() => {
-      this.message = message;
-    }, 2000);
+      this.message = '';
+    }, 1500);
   }
 
-  resetTodoInput = () => {
+  sortBy(order) {
+    this.sortOrder = order;
+    this.todos = this.appService.getTodos(this.sortOrder);
+  }
+
+  pageTo(pageNum: any) {
+    this.currentPage = pageNum;
+    if ( pageNum === 'prev' ) {
+      this.currentPage = 1;
+    }
+    if ( pageNum === 'next' ) {
+      this.currentPage = this.totalPages.length;
+    }
+    this.fetchTodos();
+  }
+
+  resetTodoInput = (message) => {
     this.todo = '';
     this.selectedTodoId = null;
-    this.todos = this.appService.getTodos();
+    this.fetchTodos();
+    this.toggleMessage(message);
   }
 }

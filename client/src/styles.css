@@ -40,3 +40,7 @@ li.ui-state-default:last-child{
 #checkAll{
     margin-top:10px;
 }
+
+.fa-edit, .fa-trash-alt, .fa-caret-down, .fa-caret-up {
+    cursor: pointer;
+}

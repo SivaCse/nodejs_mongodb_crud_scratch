@@ -1,25 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+const URL = 'http://localhost:3000/todos';
+
 @Injectable()
 export class AppService {
 
   constructor(private http: HttpClient) { }
 
-  getTodos() {
-    return this.http.get('http://localhost:3000/todos');
+  getTodos(order = 'asc', pageNum = 1) {
+    return this.http.get(`${URL}/${order}/${pageNum}`);
+  }
+
+  getTotal() {
+    return this.http.get(`${URL}/count`);
   }
 
   createTodo(todo) {
-    return this.http.post('http://localhost:3000/todos', todo);
+    return this.http.post(URL, todo);
   }
 
   updateTodo(todo) {
-    return this.http.put(`http://localhost:3000/todos/${todo._id}`, todo);
+    return this.http.put(`${URL}/${todo._id}`, todo);
   }
 
   deleteTodo(id) {
-    return this.http.delete(`http://localhost:3000/todos/${id}`);
+    return this.http.delete(`${URL}/${id}`);
   }
 
 }
